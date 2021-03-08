@@ -1,49 +1,42 @@
-openapi: "3.0.0"
+openapi: 3.0.0
 info:
-  description: "This is the FlightX API."
-  version: "1.0.0"
-  title: "FlightX API"
-  termsOfService: "http://swagger.io/terms/"
-  contact:
-    email: "tomas@xpsolutions.com.au"
-  license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+  title: FlightX API
+  description: An API definition for the FlightX database
+  version: 1.0.0
 servers:
-  - url: http://localhost:8080/
-# Basic Authtication
+- url: http://localhost:8080/v1
 paths:
-   /IndexTrackerQuery/GetAllTrackers:
+  /IndexTrackerQuery/GetAllTrackers:
+    get:
+      description: Get a List of all trackers
+      operationId: indexTrackerQueryGetAllTrackersGET
+      responses:
+        "200":
+          description: A List of all trackers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IndexTracker'
+                x-content-type: application/json
+        "400":
+          description: Bad request
+      x-swagger-router-controller: Default
+  /IndexTrackerQuery/GetTrackerChartData:
       get:
-         description: Get a List of all trackers
-         responses:
-            '200':
-                description: "Successful operation"
-                content:
-                   applicaton/json:
-                      schema:
-                        type: "array"
-                        items:
-                           $ref: "#/components/schemas/IndexTracker"
-            '401':
-               description: Unauthorized
-            '403':
-               description: Forbidden
-         operationId: indexTrackerQueryGetAllTrackersGET
-
-   /IndexTrackerQuery/GetTrackerChartData:
-      post:
         tags:
         - "Tracker Chart Data"
         summary: "Get the chart data for a tracker"
-        description: "Get Chart data"
+        description: ""
+        operationId: "indexTrackerQueryGetChartDataGET"
         parameters:
         - in: "query"
           name: "ID"
           description: "The Tracker ID"
           required: true
           schema:
-             type: number
+             type: string
         responses:
             '200':
                 description: "Successful operation"
@@ -57,9 +50,9 @@ paths:
                description: Unauthorized
             '403':
                description: Forbidden
-        operationId: GetChartData
+        x-swagger-router-controller: Default
 components:
-   schemas:
+    schemas:
       IndexTracker:
         type: array
         items:                       
@@ -125,5 +118,3 @@ components:
                   type: number
                lastUpdateDate:
                   type: string
-
-

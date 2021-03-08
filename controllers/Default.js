@@ -16,3 +16,17 @@ module.exports.indexTrackerQueryGetAllTrackersGET = function indexTrackerQueryGe
       utils.writeJson(res, response);
     });
 };
+
+/*This name must be equal to an operationID in the openapi.yaml file */
+module.exports.indexTrackerQueryGetChartDataGET = function indexTrackerQueryGetChartDataGET (req, res, next) {
+  console.log(req);
+  Default.indexTrackerQueryGetChartDataGET(req.query.ID)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    }, error => {
+      console.log('ERROR: ' + JSON.stringify(error));
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
